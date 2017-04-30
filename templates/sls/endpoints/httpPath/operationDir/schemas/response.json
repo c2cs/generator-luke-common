@@ -1,0 +1,112 @@
+{
+	"id": "<%= operationId %>Response",
+	"description": "Success response",
+	"type": "object",
+	"required": [
+		"meta",
+		"jsonapi",
+		"data"
+	],
+	"properties": {
+		"jsonapi": {
+			"type": "object",
+			"required": [
+				"version"
+			],
+			"properties": {
+				"version": {
+					"type": "string"
+				}
+			}
+		},
+		"meta": {
+			"type": "object",
+			"required": [
+				"requestId",
+				"seriesId"
+			],
+			"properties": {
+				"requestId": {
+					"type": "string",
+					"description": "unique UUID of current request"
+				},
+				"seriesId": {
+					"type": "string",
+					"description": "persistend UUID of initial request for all calls chain"
+				}
+			}
+		},
+		"data": {
+			"type": "object"
+		}
+	},
+	"definitions": {
+		"errorModel": {
+			"type": "object",
+			"required": [
+				"meta",
+				"jsonapi",
+				"errors"
+			],
+			"properties": {
+				"jsonapi": {
+					"type": "object",
+					"required": [
+						"version"
+					],
+					"properties": {
+						"version": {
+							"type": "string"
+						}
+					}
+				},
+				"meta": {
+					"type": "object",
+					"required": [
+						"requestId",
+						"seriesId"
+					],
+					"properties": {
+						"requestId": {
+							"type": "string",
+							"description": "unique UUID of current request"
+						},
+						"seriesId": {
+							"type": "string",
+							"description": "persistend UUID of initial request for all calls chain"
+						}
+					}
+				},
+				"errors": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"code",
+							"title",
+							"detail",
+							"url"
+						],
+						"properties": {
+							"code": {
+								"type": "string",
+								"description": "HTTP status code applicable to this problem"
+							},
+							"title": {
+								"type": "string",
+								"description": "short, human-readable summary of the problem"
+							},
+							"detail": {
+								"type": "string",
+								"description": "human-readable explanation specific to this occurrence of the problem"
+							},
+							"url": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

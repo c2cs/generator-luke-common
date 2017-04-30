@@ -1,0 +1,190 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Demo Service",
+		"description": "Demo Service",
+		"termsOfService": "http://c2cschools.com/terms",
+		"contact": {
+			"name": "C2CSchools Team",
+			"email": "foo@c2cschools.com",
+			"url": "http://c2cschools.com"
+		},
+		"license": {
+			"name": "EULA"
+		}
+	},
+	"host": "demo-service.aws.c2c",
+	"basePath": "/",
+	"schemes": [
+		"http"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/hello": {
+			"get": {
+				"description": "Just responses `Hello {{username}}`\n",
+				"operationId": "hello",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "username",
+						"in": "query",
+						"description": "username for greeting",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success response",
+						"schema": {
+							"type": "object",
+							"required": [
+								"meta",
+								"jsonapi",
+								"data"
+							],
+							"properties": {
+								"jsonapi": {
+									"type": "object",
+									"required": [
+										"version"
+									],
+									"properties": {
+										"version": {
+											"type": "string"
+										}
+									}
+								},
+								"meta": {
+									"type": "object",
+									"required": [
+										"requestId",
+										"seriesId"
+									],
+									"properties": {
+										"requestId": {
+											"type": "string",
+											"description": "unique UUID of current request"
+										},
+										"seriesId": {
+											"type": "string",
+											"description": "persistend UUID of initial request for all calls chain"
+										}
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "UUID of generated greeting"
+										},
+										"type": {
+											"type": "string",
+											"enum": [
+												"greeting"
+											],
+											"description": "type of response"
+										},
+										"attributes": {
+											"type": "object",
+											"properties": {
+												"message": {
+													"description": "greetings message",
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"default": {
+						"description": "unexpected error",
+						"schema": {
+							"$ref": "#/definitions/errorModel"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"errorModel": {
+			"type": "object",
+			"required": [
+				"meta",
+				"jsonapi",
+				"errors"
+			],
+			"properties": {
+				"jsonapi": {
+					"type": "object",
+					"required": [
+						"version"
+					],
+					"properties": {
+						"version": {
+							"type": "string"
+						}
+					}
+				},
+				"meta": {
+					"type": "object",
+					"required": [
+						"requestId",
+						"seriesId"
+					],
+					"properties": {
+						"requestId": {
+							"type": "string",
+							"description": "unique UUID of current request"
+						},
+						"seriesId": {
+							"type": "string",
+							"description": "persistend UUID of initial request for all calls chain"
+						}
+					}
+				},
+				"errors": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"code",
+							"title",
+							"detail",
+							"url"
+						],
+						"properties": {
+							"code": {
+								"type": "string",
+								"description": "HTTP status code applicable to this problem"
+							},
+							"title": {
+								"type": "string",
+								"description": "short, human-readable summary of the problem"
+							},
+							"detail": {
+								"type": "string",
+								"description": "human-readable explanation specific to this occurrence of the problem"
+							},
+							"url": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

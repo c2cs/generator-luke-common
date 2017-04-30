@@ -1,0 +1,34 @@
+service: <%= name %>
+provider:
+  name: aws
+  runtime: nodejs4.3
+  stage: dev
+  region: us-east-1
+  environment: '${file(serverless.env.yml):${self:custom.stage}}'
+  iamRoleStatements: '${file(./.sls/serverless.common.yml):iamRoleStatements}'
+  vpc: '${file(./.sls/serverless.common.yml):vpc}'
+plugins:
+  - '@c2cs/serverless-subscription-plugin'
+  - '@c2cs/serverless-apigateway-plugin'
+  - serverless-offline
+custom:
+  stage: '${opt:stage, self:provider.stage}'
+  subscription-pattern-default: '*'
+  subscription-target-default: 'arn:aws:kinesis:us-east-1:277549955817:stream/CloudWatchLogsToSqs01'
+  subscription-target-type: direct
+  subscription-source-default: all
+  subscription-default-role: 'arn:aws:iam::277549955817:role/CWLtoKinesisRole'
+functions:
+  <%= operationId %>:
+    handler: endpoints<%= httpPath %>/<%= operationDir %>/index.handler
+    memorySize: 64
+    timeout: 5
+    events:
+      -
+        http:
+          path: hello
+          method: <%= httpMethod %>
+          integration: lambda
+          request:
+            template: '${file(./.sls/serverless.common.yml):request.template}'
+          response: '${file(./.sls/serverless.common.yml):response}'
