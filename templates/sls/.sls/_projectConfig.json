@@ -2,8 +2,8 @@
 	"swagger": "2.0",
 	"info": {
 		"version": "1.0.0",
-		"title": "Demo Service",
-		"description": "Demo Service",
+		"title": "<%= name %>",
+		"description": "<%= description %>",
 		"termsOfService": "http://c2cschools.com/terms",
 		"contact": {
 			"name": "C2CSchools Team",
@@ -14,36 +14,26 @@
 			"name": "EULA"
 		}
 	},
-	"host": "demo-service.aws.c2c",
+	"host": "api.c2cs.io",
 	"basePath": "/",
 	"schemes": [
-		"http"
+		"http",
+		"https"
 	],
 	"consumes": [
-		"application/json"
+		"application/vnd.api+json"
 	],
 	"produces": [
-		"application/json"
+		"application/vnd.api+json"
 	],
 	"paths": {
-		"/hello": {
-			"get": {
-				"description": "Just responses `Hello {{username}}`\n",
-				"operationId": "hello",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "username",
-						"in": "query",
-						"description": "username for greeting",
-						"type": "string"
-					}
-				],
+		"<%= httpPath %>": {
+			"<%= httpMethod %>": {
+				"description": "<%= operationDescription %>",
+				"operationId": "<%= operationId %>",
 				"responses": {
 					"200": {
-						"description": "success response",
+						"description": "Success response",
 						"schema": {
 							"type": "object",
 							"required": [
@@ -81,29 +71,7 @@
 									}
 								},
 								"data": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string",
-											"description": "UUID of generated greeting"
-										},
-										"type": {
-											"type": "string",
-											"enum": [
-												"greeting"
-											],
-											"description": "type of response"
-										},
-										"attributes": {
-											"type": "object",
-											"properties": {
-												"message": {
-													"description": "greetings message",
-													"type": "string"
-												}
-											}
-										}
-									}
+									"type": "object"
 								}
 							}
 						}

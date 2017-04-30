@@ -26,7 +26,7 @@ functions:
     events:
       -
         http:
-          path: hello
+          path: httpPath
           method: <%= httpMethod %>
           integration: lambda
           request:

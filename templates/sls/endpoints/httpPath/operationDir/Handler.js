@@ -1,4 +1,5 @@
 /**
+ * <%= operationDescription %>
  * @author <email> <name>
  */
 "use strict";
@@ -18,8 +19,8 @@ class <%= operationClass %> extends SessionEndpoint {
 	/**
 	 * Entry point
 	 *
-	 * @param {Object} event need description
-	 * @param {String} event.username provided username for greeting
+	 * @param {<%= operationClass %>Request} event request data
+	 *
 	 * @returns {Promise} promise
 	 */
 	handle ( event ) {
@@ -61,4 +62,4 @@ class <%= operationClass %> extends SessionEndpoint {
 
 }
 
-module.exports = GetHello;
+module.exports = <%= operationClass %>;

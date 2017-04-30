@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: Demo Service
-  description: Demo Service
+  title: <%= name %>
+  description: <%= description %>
   termsOfService: http://c2cschools.com/terms
   contact:
     name: C2CSchools Team
@@ -10,28 +10,19 @@ info:
     url: http://c2cschools.com
   license:
     name: EULA
-host: demo-service.aws.c2c
+host: api.c2cs.io
 basePath: /
 schemes:
   - http
 consumes:
-  - application/json
+  - application/vnd.api+json
 produces:
-  - application/json
+  - application/vnd.api+json
 paths:
-  /hello:
+  <%= httpPath %>:
     get:
-      description: |
-        Just responses `Hello {{username}}`
-
-      operationId: hello
-      produces:
-        - application/json
-      parameters:
-        - name: username
-          in: query
-          description: username for greeting
-          type: string
+      operationId: <%= operationId %>
+      description: <%= operationDescription %>
       responses:
         '200':
           description: success response
@@ -63,21 +54,6 @@ paths:
                     description: persistend UUID of initial request for all calls chain
               data:
                 type: object
-                properties:
-                  id:
-                    type: string
-                    description: UUID of generated greeting
-                  type:
-                    type: string
-                    enum: ["greeting"]
-                    description: type of response
-                  attributes:
-                    type: object
-                    properties:
-                      message:
-                        description: greetings message
-                        type: string
-
         default:
           description: unexpected error
           schema:
