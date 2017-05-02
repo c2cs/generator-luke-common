@@ -50,13 +50,6 @@ module.exports = baseGenerator.extend( {
 				default     : _.random(3000, 6000, false),
 				cacheMode	: "prefer-cache",
 				askAgain	: false
-			},{
-				type        : "input",
-				name        : "vagrantPortCount",
-				message     : "How many ports should be mapped to Vagrant?",
-				default     : 6,
-				cacheMode	: "prefer-cache",
-				askAgain	: false
 			}],
 
 			// Callback function
@@ -70,7 +63,9 @@ module.exports = baseGenerator.extend( {
 
 		var me = this;
 		var portStart = parseInt( me.props.vagrantPortStart, 10 );
-		var portCount = parseInt( me.props.vagrantPortCount, 10 );
+
+		// Hard coded value
+		var portCount = 6;
 		var ret = [];
 
 		// Do not expose any ports if the start or count is invalid or zero..
@@ -84,7 +79,10 @@ module.exports = baseGenerator.extend( {
 		// Create an array of port numbers
 		_.times( portCount, function( portIndex ) {
 			var portNum = portStart + portIndex;
-			ret.push( portNum );
+			ret.push( {
+				host: portNum,
+				guest: 3090 + portIndex
+			} );
 		});
 
 		// Finished
@@ -151,7 +149,7 @@ module.exports = baseGenerator.extend( {
 
 			// Vagrantfile
 			me.fs.copyTpl(
-				me.templatePath( "core/_Vagrantfile" ), me.destinationPath( "Vagrantfile" ), {
+				me.templatePath( "sls/_Vagrantfile" ), me.destinationPath( "Vagrantfile" ), {
 					name : me.props.parsedProject,
 					portMappings: me._getVagrantPorts()
 				}
