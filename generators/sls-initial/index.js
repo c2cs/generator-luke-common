@@ -109,15 +109,17 @@ module.exports = baseGenerator.extend( {
 		if ( /^sls-service-/.test( me.props.parsedProject ) ) {
 
 			return {
-				parsed: "sls-service-" + me.props.parsedProject,
-				full: "SLS Service " + me.props.projectName
-			}
+				parsed: me.props.parsedProject,
+				full: me.props.projectName
+			};
 
 		}
+
 		return {
-			parsed: me.props.parsedProject,
-			full: me.props.projectName
-		}
+			parsed: "sls-service-" + me.props.parsedProject,
+			full: "SLS Service " + me.props.projectName
+		};
+
 	},
 
 	writing : {

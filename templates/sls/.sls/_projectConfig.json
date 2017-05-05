@@ -15,9 +15,8 @@
 		}
 	},
 	"host": "api.c2cs.io",
-	"basePath": "/",
+	"basePath": "/v3",
 	"schemes": [
-		"http",
 		"https"
 	],
 	"consumes": [
@@ -29,57 +28,34 @@
 	"paths": {
 		"<%= httpPath %>": {
 			"<%= httpMethod %>": {
-				"description": "<%= operationDescription %>",
 				"operationId": "<%= operationId %>",
+				"description": "<%= operationDescription %>",
 				"responses": {
 					"200": {
-						"description": "Success response",
+						"description": "success response",
 						"schema": {
 							"type": "object",
-							"required": [
-								"meta",
-								"jsonapi",
-								"data"
-							],
-							"properties": {
-								"jsonapi": {
-									"type": "object",
+							"allOf": [
+								{
+									"$ref": "#/definitions/CommonResponse"
+								},
+								{
 									"required": [
-										"version"
+										"data"
 									],
 									"properties": {
-										"version": {
-											"type": "string"
+										"data": {
+											"type": "object"
 										}
 									}
-								},
-								"meta": {
-									"type": "object",
-									"required": [
-										"requestId",
-										"seriesId"
-									],
-									"properties": {
-										"requestId": {
-											"type": "string",
-											"description": "unique UUID of current request"
-										},
-										"seriesId": {
-											"type": "string",
-											"description": "persistend UUID of initial request for all calls chain"
-										}
-									}
-								},
-								"data": {
-									"type": "object"
 								}
-							}
+							]
 						}
 					},
 					"default": {
 						"description": "unexpected error",
 						"schema": {
-							"$ref": "#/definitions/errorModel"
+							"$ref": "#/definitions/ErrorModel"
 						}
 					}
 				}
@@ -87,12 +63,11 @@
 		}
 	},
 	"definitions": {
-		"errorModel": {
+		"CommonResponse": {
 			"type": "object",
 			"required": [
 				"meta",
-				"jsonapi",
-				"errors"
+				"jsonapi"
 			],
 			"properties": {
 				"jsonapi": {
@@ -122,37 +97,51 @@
 							"description": "persistend UUID of initial request for all calls chain"
 						}
 					}
+				}
+			}
+		},
+		"ErrorModel": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/CommonResponse"
 				},
-				"errors": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"required": [
-							"code",
-							"title",
-							"detail",
-							"url"
-						],
-						"properties": {
-							"code": {
-								"type": "string",
-								"description": "HTTP status code applicable to this problem"
-							},
-							"title": {
-								"type": "string",
-								"description": "short, human-readable summary of the problem"
-							},
-							"detail": {
-								"type": "string",
-								"description": "human-readable explanation specific to this occurrence of the problem"
-							},
-							"url": {
-								"type": "string"
+				{
+					"required": [
+						"errors"
+					],
+					"properties": {
+						"errors": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"required": [
+									"code",
+									"title",
+									"detail",
+									"url"
+								],
+								"properties": {
+									"code": {
+										"type": "string",
+										"description": "HTTP status code applicable to this problem"
+									},
+									"title": {
+										"type": "string",
+										"description": "short, human-readable summary of the problem"
+									},
+									"detail": {
+										"type": "string",
+										"description": "human-readable explanation specific to this occurrence of the problem"
+									},
+									"url": {
+										"type": "string"
+									}
+								}
 							}
 						}
 					}
 				}
-			}
+			]
 		}
 	}
 }

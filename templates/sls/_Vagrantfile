@@ -167,4 +167,11 @@ Vagrant.configure("2") do |config|
 
 
 
+	# Post Message
+	# ---------------------
+	# Display post message with
+	config.vm.post_up_message = "SLS Devutils launched at http://127.0.0.1:<%= startPort %>"
+
+
+
 end

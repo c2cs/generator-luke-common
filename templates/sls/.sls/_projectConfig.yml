@@ -11,16 +11,16 @@ info:
   license:
     name: EULA
 host: api.c2cs.io
-basePath: /
+basePath: /v3
 schemes:
-  - http
+  - https
 consumes:
-  - application/vnd.api+json
+- application/vnd.api+json
 produces:
-  - application/vnd.api+json
+- application/vnd.api+json
 paths:
   <%= httpPath %>:
-    get:
+    <%= httpMethod %>:
       operationId: <%= operationId %>
       description: <%= operationDescription %>
       responses:
@@ -28,43 +28,22 @@ paths:
           description: success response
           schema:
             type: object
-            required:
-              - meta
-              - jsonapi
-              - data
-            properties:
-              jsonapi:
-                type: object
-                required:
-                - version
+            allOf:
+              - $ref: '#/definitions/CommonResponse'
+              - required: ["data"]
                 properties:
-                  version:
-                    type: string
-              meta:
-                type: object
-                required:
-                - requestId
-                - seriesId
-                properties:
-                  requestId:
-                    type: string
-                    description: unique UUID of current request
-                  seriesId:
-                    type: string
-                    description: persistend UUID of initial request for all calls chain
-              data:
-                type: object
+                  data:
+                    type: object
         default:
           description: unexpected error
           schema:
-            $ref: '#/definitions/errorModel'
+            $ref: '#/definitions/ErrorModel'
 definitions:
-  errorModel:
+  CommonResponse:
     type: object
     required:
       - meta
       - jsonapi
-      - errors
     properties:
       jsonapi:
         type: object
@@ -85,24 +64,29 @@ definitions:
           seriesId:
             type: string
             description: persistend UUID of initial request for all calls chain
-      errors:
-        type: array
-        items:
-          type: object
-          required:
-          - code
-          - title
-          - detail
-          - url
-          properties:
-            code:
-              type: string
-              description: HTTP status code applicable to this problem
-            title:
-              type: string
-              description: short, human-readable summary of the problem
-            detail:
-              type: string
-              description: human-readable explanation specific to this occurrence of the problem
-            url:
-              type: string
+  ErrorModel:
+    allOf:
+      - $ref: '#/definitions/CommonResponse'
+      - required: ["errors"]
+        properties:
+          errors:
+            type: array
+            items:
+              type: object
+              required:
+              - code
+              - title
+              - detail
+              - url
+              properties:
+                code:
+                  type: string
+                  description: HTTP status code applicable to this problem
+                title:
+                  type: string
+                  description: short, human-readable summary of the problem
+                detail:
+                  type: string
+                  description: human-readable explanation specific to this occurrence of the problem
+                url:
+                  type: string

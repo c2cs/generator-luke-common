@@ -151,6 +151,7 @@ module.exports = baseGenerator.extend( {
 			me.fs.copyTpl(
 				me.templatePath( "sls/_Vagrantfile" ), me.destinationPath( "Vagrantfile" ), {
 					name : me.props.parsedProject,
+					startPort: me.props.vagrantPortStart,
 					portMappings: me._getVagrantPorts()
 				}
 			);
