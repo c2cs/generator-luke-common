@@ -11,8 +11,8 @@
 "use strict";
 
 var baseGenerator = require( "../_BaseGenerator" );
-var _             = require( "lodash" );
-var path =        require( "path" );
+var _ = require( "lodash" );
+var path = require( "path" );
 
 module.exports = baseGenerator.extend( {
 
@@ -184,6 +184,17 @@ module.exports = baseGenerator.extend( {
 					"operationDir/Handler.js"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
 					"/" + operationDir + "/Handler.js" ), {
+					operationClass: _.upperFirst( me.props.operationId ),
+					operationDescription: me.props.operationDescription
+				} );
+
+			// Dynamic copy test file
+			me.fs.copyTpl( me.templatePath( "sls/tests/OperationTest.js" ),
+				me.destinationPath( path.join( "tests",
+					_.upperFirst( me.props.operationId ) + "Test.js" ) ), {
+					httpPath: me.props.httpPath,
+					operationDir: operationDir,
+					operationId: me.props.operationId,
 					operationClass: _.upperFirst( me.props.operationId ),
 					operationDescription: me.props.operationDescription
 				} );

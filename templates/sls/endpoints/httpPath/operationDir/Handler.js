@@ -27,6 +27,12 @@ class <%= operationClass %> extends SessionEndpoint {
 
 		this.logger.info( "default.action", "Test log", event );
 
+		if ( !event ) {
+
+			throw this.createError( 500, "Missed event" );
+
+		}
+
 		return Promise.resolve( {} );
 
 	}
@@ -50,10 +56,9 @@ class <%= operationClass %> extends SessionEndpoint {
 
 		// Force initialize required params
 		info = info || {};
-		info.deps = info.deps || {};
 
 		// Template for dependencies
-		this.deps = Object.assign( {}, this.deps, {
+		this.deps = Object.assign( {}, info.deps, {
 
 			// Add your dependencies here.
 		} );
