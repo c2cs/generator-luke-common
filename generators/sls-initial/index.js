@@ -184,7 +184,7 @@ module.exports = baseGenerator.extend( {
 					"operationDir/Handler.js"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
 					"/" + operationDir + "/Handler.js" ), {
-					operationClass: _.upperFirst( operationDir ),
+					operationClass: _.upperFirst( me.props.operationId ),
 					operationDescription: me.props.operationDescription
 				} );
 
