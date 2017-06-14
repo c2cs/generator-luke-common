@@ -65,7 +65,7 @@ module.exports = baseGenerator.extend( {
 		var portStart = parseInt( me.props.vagrantPortStart, 10 );
 
 		// Hard coded value
-		var portCount = 6;
+		var portCount = 10;
 		var ret = [];
 
 		// Do not expose any ports if the start or count is invalid or zero..
@@ -177,6 +177,19 @@ module.exports = baseGenerator.extend( {
 					"_sls-devutils.sh" ) ),
 					me.destinationPath( path.join( "env", "vagrant", "project",
 						"sls-devutils.sh" ) )
+			);
+
+			me.fs.copyTpl(
+				me.templatePath( path.join( "sls", "scripts",
+					"_update-devutils.sh" ) ),
+				me.destinationPath( path.join( "scripts",
+					"update-devutils.sh" ) )
+			);
+
+			me.fs.copyTpl(
+				me.templatePath( path.join( "sls", "scripts",
+					"_view-logs.sh" ) ),
+				me.destinationPath( path.join( "scripts", "view-logs.sh" ) )
 			);
 
 		}

@@ -1,11 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# This script loads credentials data from
+# This script will update devutils
 
 echo ""
-echo "[Project-Script] Load and launch \`sls-devutils\`"
+echo "Update sls-devutils image"
+echo "---------------------------"
 echo ""
 
+# Kill existing container
+sudo docker stop sls-devutils
+sudo docker rm sls-devutils
+
+# Update
 sudo `aws ecr get-login`
 
 sudo docker pull \

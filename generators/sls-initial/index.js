@@ -181,7 +181,7 @@ module.exports = baseGenerator.extend( {
 
 			// Dynamic copy initial Handler.js
 			me.fs.copyTpl( me.templatePath( "sls/endpoints/httpPath/" +
-					"operationDir/Handler.js"),
+					"operationDir/_Handler.js"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
 					"/" + operationDir + "/Handler.js" ), {
 					operationClass: _.upperFirst( me.props.operationId ),
@@ -189,7 +189,7 @@ module.exports = baseGenerator.extend( {
 				} );
 
 			// Dynamic copy test file
-			me.fs.copyTpl( me.templatePath( "sls/tests/OperationTest.js" ),
+			me.fs.copyTpl( me.templatePath( "sls/tests/_OperationTest.js" ),
 				me.destinationPath( path.join( "tests",
 					_.upperFirst( me.props.operationId ) + "Test.js" ) ), {
 					httpPath: me.props.httpPath,
@@ -199,19 +199,19 @@ module.exports = baseGenerator.extend( {
 					operationDescription: me.props.operationDescription
 				} );
 
-			// Dynamic copy request.json
+			// Dynamic copy _request.json
 			me.fs.copyTpl( me.templatePath( "sls/endpoints/httpPath/" +
-					"operationDir/schemas/request.json"),
+					"operationDir/schemas/_request.json"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
-					"/" + operationDir + "/schemas/request.json" ), {
+					"/" + operationDir + "/schemas/_request.json" ), {
 					operationId: me.props.operationId
 				} );
 
-			// Dynamic copy request.json
+			// Dynamic copy _request.json
 			me.fs.copyTpl( me.templatePath( "sls/endpoints/httpPath/" +
-					"operationDir/schemas/response.json"),
+					"operationDir/schemas/_response.json"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
-					"/" + operationDir + "/schemas/response.json" ), {
+					"/" + operationDir + "/schemas/_response.json" ), {
 					operationId: me.props.operationId
 				} );
 
