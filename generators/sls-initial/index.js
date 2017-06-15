@@ -203,7 +203,7 @@ module.exports = baseGenerator.extend( {
 			me.fs.copyTpl( me.templatePath( "sls/endpoints/httpPath/" +
 					"operationDir/schemas/_request.json"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
-					"/" + operationDir + "/schemas/_request.json" ), {
+					"/" + operationDir + "/schemas/request.json" ), {
 					operationId: me.props.operationId
 				} );
 
@@ -211,7 +211,7 @@ module.exports = baseGenerator.extend( {
 			me.fs.copyTpl( me.templatePath( "sls/endpoints/httpPath/" +
 					"operationDir/schemas/_response.json"),
 				me.destinationPath( "endpoints" + me.props.httpPath +
-					"/" + operationDir + "/schemas/_response.json" ), {
+					"/" + operationDir + "/schemas/response.json" ), {
 					operationId: me.props.operationId
 				} );
 

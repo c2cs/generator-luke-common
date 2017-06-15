@@ -28,7 +28,7 @@ functions:
         http:
           path: <%= httpPath %>
           method: <%= httpMethod %>
-          integration: lambda
+          integration: lambda-proxy
           request:
             template: '${file(./.sls/serverless.common.yml):request.template}'
           response: '${file(./.sls/serverless.common.yml):response}'
