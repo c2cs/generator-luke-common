@@ -52,6 +52,20 @@ module.exports = baseGenerator.extend(
 				version: "^1.2.7"
 			} );
 
+			// Add sls required dev-dependencies
+			me._createSharedObject( "npm-dev-dependency", "apigateway plugin", {
+				module: "@c2cs/@c2cs/serverless-apigateway-plugin",
+				version: "^0.2.9"
+			} );
+			me._createSharedObject( "npm-dev-dependency", "subscriptions", {
+				module: "@c2cs/serverless-subscription-plugin",
+				version: "latest"
+			} );
+			me._createSharedObject( "npm-dev-dependency", "offline plugin", {
+				module: "serverless-offline",
+				version: "^3.14.2"
+			} );
+
 			// Compose
 			me.composeWith( "luke:package" );
 
