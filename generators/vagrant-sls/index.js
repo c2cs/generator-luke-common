@@ -17,9 +17,6 @@ module.exports = baseGenerator.extend( {
 
 	initializing : function() {
 
-		// Locals
-		var me = this;
-
 		// Compose
 		//me.composeWith("luke:env-dir");
 
@@ -130,6 +127,15 @@ module.exports = baseGenerator.extend( {
 				"README.md", "tmp.sh"
 			];
 
+			var scripts = [
+				"execute.sh",
+				"deploy-to-dev.sh",
+				"remove-dev-service.sh",
+				"restart-all.sh",
+				"update-devutils.sh",
+				"view-logs.sh"
+			];
+
 			_.each( staticFilenames, function( fn ) {
 
 				console.log("\n\n--> " + fn);
@@ -179,18 +185,17 @@ module.exports = baseGenerator.extend( {
 						"sls-devutils.sh" ) )
 			);
 
-			me.fs.copyTpl(
-				me.templatePath( path.join( "sls", "scripts",
-					"_update-devutils.sh" ) ),
-				me.destinationPath( path.join( "scripts",
-					"update-devutils.sh" ) )
-			);
+			// Copy scripts
+			_.each( scripts, function scriptHandler ( script ) {
+				"use strict";
 
-			me.fs.copyTpl(
-				me.templatePath( path.join( "sls", "scripts",
-					"_view-logs.sh" ) ),
-				me.destinationPath( path.join( "scripts", "view-logs.sh" ) )
-			);
+				me.fs.copyTpl(
+					me.templatePath( path.join( "sls", "scripts",
+						"_" + script ) ),
+					me.destinationPath( path.join( "scripts", script ) )
+				);
+
+			} );
 
 		}
 	}
